@@ -3,21 +3,22 @@ import random,math
 class Helper:
 
     @staticmethod
-    def generateNumber(length,prime = False,k = 20):
+    def generateNumber(length):
         number = ""
 
         for _ in range(length - 1):
             number += str(random.randint(0,1))
 
         number = int(''.join(('1', number)),2)
-
-        if prime:
-            while not Helper.testMiller(number,k):
-                number += 2
-            return number 
         
         return number
 
+    @staticmethod
+    def getPrimeNumber(length,k = 20):
+        number = Helper.generateNumber(length)
+        while not Helper.testMiller(number,k):
+            number += 2
+        return number 
     @staticmethod
     def testMiller(p,k):    
         temp = p - 1           
@@ -35,7 +36,7 @@ class Helper:
                 else:
                     for r in range (1, s):
                         xr = pow(x, d * pow(2,r), p)
-                        if xr == (-1)%p:
+                        if xr == (-1) % p:
                             return True
                         elif xr == 1:
                             return False

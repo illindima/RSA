@@ -3,19 +3,19 @@ from helper import *
 class RSA:
     @staticmethod
     def encrypt(m,e,n):
-        return pow(m,e,n)
+        return (m ** e) % n
     
     @staticmethod
     def decrypt(c,d,n):
-        return pow(c,d,n)
+        return (c ** d) % n
     
     @staticmethod
     def sign(m,d,n):
-        return pow(m,d,n)
+        return (m ** d) % n
     
     @staticmethod
     def verify(s,e,n):
-        return pow(s,e,n)
+        return (s ** e) % n
 
     @staticmethod
     def sendKey(k,e1,n1,d,n):
@@ -33,8 +33,8 @@ class RSA:
 
     @staticmethod
     def generateKeys(length):
-        p = Helper.generateNumber(length,True)
-        q = Helper.generateNumber(length,True)
+        p = Helper.getPrimeNumber(length)
+        q = Helper.getPrimeNumber(length)
         
         n = p * q
         
@@ -44,5 +44,4 @@ class RSA:
 
         d = Helper.AEA(e,oiler)[1] % oiler
         
-
         return [e,n,d]
