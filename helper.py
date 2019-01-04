@@ -3,25 +3,20 @@ import random,math
 class Helper:
 
     @staticmethod
-    def generateNumber(length,exact = True):
+    def generateNumber(length,prime = False,k = 20):
         number = ""
 
         for _ in range(length - 1):
             number += str(random.randint(0,1))
 
-        number = ''.join(('1', number))
+        number = int(''.join(('1', number)),2)
 
+        if prime:
+            while not Helper.testMiller(number,k):
+                number += 2
+            return number 
         
-        return int(number,2)
-
-    @staticmethod
-    def generatePrimeNumber(length, k = 20):
-        n = Helper.generateNumber(length)
-
-        while not Helper.testMiller(n,k):
-            n += 2
-
-        return n 
+        return number
 
     @staticmethod
     def testMiller(p,k):    

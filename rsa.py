@@ -24,7 +24,7 @@ class RSA:
     @staticmethod
     def receiveKey(k1,s1,d1,n1,e,n):
         k = RSA.decrypt(k1, d1, n1)
-        if RSA.verify(RSA.decrypt(s1, d1, n1), e, n) == k:
+        if  RSA.verify(RSA.decrypt(s1, d1, n1), e, n) == k:
             return k
 
     @staticmethod
@@ -33,8 +33,8 @@ class RSA:
 
     @staticmethod
     def generateKeys(length):
-        p = Helper.generatePrimeNumber(length)
-        q = Helper.generatePrimeNumber(length)
+        p = Helper.generateNumber(length,True)
+        q = Helper.generateNumber(length,True)
         
         n = p * q
         
