@@ -14,38 +14,52 @@ class Helper:
         return number
 
     @staticmethod
+    def isSimple(n):
+        if(n < 2): return False    
+        numbers = [2,3,5,7]
+
+        for i in numbers:
+            if n % i == 0: return False
+
+        return True
+    @staticmethod
     def getPrimeNumber(length,k = 20):
         number = Helper.generateNumber(length)
+        while not Helper.isSimple(number):
+            number = Helper.generateNumber(length)
         while not Helper.testMiller(number,k):
             number += 2
         return number 
     @staticmethod
-    def testMiller(p,k):    
-        temp = p - 1           
-        s = 0
-        while temp % 2 == 0:
-            temp //= 2
-            s += 1
-        d = temp
-        x = 0
-        for _ in range(k):
-            x = random.randint(2, p - 1)
-            if Helper.AEA(x, p)[0] == 1:
-                if pow(x, d, p) == 1 or pow(x, d, p) == (-1) % p:
-                    continue
-                else:
-                    for r in range (1, s):
-                        xr = pow(x, d * pow(2,r), p)
-                        if xr == (-1) % p:
-                            return True
-                        elif xr == 1:
-                            return False
-                        else:
-                            continue
+    def testMiller(p,k):  
+        if Helper.isSimple(p):
+            temp = p - 1           
+            s = 0
+            while temp % 2 == 0:
+                temp //= 2
+                s += 1
+            d = temp
+            x = 0
+            for _ in range(k):
+                x = random.randint(2, p - 1)
+                if Helper.AEA(x, p)[0] == 1:
+                    if pow(x, d, p) == 1 or pow(x, d, p) == (-1) % p:
+                        continue
+                    else:
+                        for r in range (1, s):
+                            xr = pow(x, d * pow(2,r), p)
+                            if xr == (-1) % p:
+                                return True
+                            elif xr == 1:
+                                return False
+                            else:
+                                continue
+                        return False
+                elif Helper.AEA(x, p)[0] > 1:
                     return False
-            elif Helper.AEA(x, p)[0] > 1:
-                return False
-        return True
+            return True
+        else:
+            return False
 
 
     @staticmethod

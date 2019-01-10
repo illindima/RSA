@@ -1,21 +1,21 @@
 from helper import *
-
+from random import randint
 class RSA:
     @staticmethod
     def encrypt(m,e,n):
-        return (m ** e) % n
+        return pow(m,e,n)
     
     @staticmethod
     def decrypt(c,d,n):
-        return (c ** d) % n
+        return pow(c,d,n)
     
     @staticmethod
     def sign(m,d,n):
-        return (m ** d) % n
+        return pow(m,d,n)
     
     @staticmethod
     def verify(s,e,n):
-        return (s ** e) % n
+        return pow(s,e,n)
 
     @staticmethod
     def sendKey(k,e1,n1,d,n):
@@ -41,7 +41,9 @@ class RSA:
         oiler = RSA.oiler(p,q)
     
         e = 2 ** 16 + 1
-
+        while Helper.AEA(e,oiler)[0] != 1:
+            e = randint(2,oiler)
+            
         d = Helper.AEA(e,oiler)[1] % oiler
         
         return [e,n,d]
